@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.ipn.upiicsa.estoycontigo.equipo5cm50"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.ipn.upiicsa.estoycontigo.equipo5cm50"
