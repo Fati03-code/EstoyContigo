@@ -15,7 +15,7 @@ class ShakeDetector(
 ) {
     private val peaks = ArrayDeque<Long>()
     private var lastShakeAt = -cooldownMs
-    private var lastPeakAt = Long.MIN_VALUE
+    private var lastPeakAt = Long.MIN_VALUE / 2
 
     fun onSample(x: Float, y: Float, z: Float, timestampMs: Long) {
         val g = sqrt(x * x + y * y + z * z) / EARTH_GRAVITY
