@@ -98,8 +98,10 @@ class SyncManager(
     /** Borra todos los datos del usuario en la nube (derecho de cancelación ARCO). */
     suspend fun deleteAllRemote(): Boolean = mutex.withLock {
         val session = auth.validSession() ?: return false
+        val photoPaths = storage.listPhotos(session.idToken, session.uid) +
+            firestore.listMoods(session.uid, session.idToken).mapNotNull { it.photoPath }
+        photoPaths.toSet().forEach { storage.deletePhoto(session.idToken, it) }
         firestore.listMoods(session.uid, session.idToken).forEach { doc ->
-            doc.photoPath?.let { runCatching { storage.deletePhoto(session.idToken, it) } }
             firestore.deleteMood(session.uid, session.idToken, doc.id)
         }
         auth.deleteRemoteAccount(session.idToken)

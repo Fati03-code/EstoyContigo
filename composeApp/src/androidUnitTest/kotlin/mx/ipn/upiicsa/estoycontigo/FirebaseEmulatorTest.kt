@@ -77,7 +77,10 @@ class FirebaseEmulatorTest {
         assertContentEquals(bytes, storage.downloadPhoto(a.idToken, path))
         assertFailsWith<RemoteException> { storage.downloadPhoto(b.idToken, path) }
         assertFailsWith<RemoteException> { storage.uploadPhoto(b.idToken, storage.photoPath(a.localId, "m2"), bytes) }
+        assertEquals(listOf(path), storage.listPhotos(a.idToken, a.localId))
+        assertFailsWith<RemoteException> { storage.listPhotos(b.idToken, a.localId) }
         storage.deletePhoto(a.idToken, path)
+        assertEquals(emptyList(), storage.listPhotos(a.idToken, a.localId))
         auth.deleteAccount(a.idToken)
     }
 }
