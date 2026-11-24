@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- orejas -->
+    <path android:fillColor="#6E8B7B" android:pathData="M33,46 L36,26 L50,38 Z" />
+    <path android:fillColor="#6E8B7B" android:pathData="M75,46 L72,26 L58,38 Z" />
+    <path android:fillColor="#E9B9A6" android:pathData="M37,42 L38.5,31 L46,38 Z" />
+    <path android:fillColor="#E9B9A6" android:pathData="M71,42 L69.5,31 L62,38 Z" />
+    <!-- cabeza -->
+    <path android:fillColor="#6E8B7B" android:pathData="M54,34 C70,34 80,45 80,58 C80,71 68,80 54,80 C40,80 28,71 28,58 C28,45 38,34 54,34 Z" />
+    <!-- ojos cerrados (calma) -->
+    <path android:strokeColor="#2F3E36" android:strokeWidth="2.6" android:strokeLineCap="round"
+        android:pathData="M40,56 Q44.5,60 49,56" />
+    <path android:strokeColor="#2F3E36" android:strokeWidth="2.6" android:strokeLineCap="round"
+        android:pathData="M59,56 Q63.5,60 68,56" />
+    <!-- nariz y boca -->
+    <path android:fillColor="#E9B9A6" android:pathData="M51.5,63 L56.5,63 L54,66 Z" />
+    <path android:strokeColor="#2F3E36" android:strokeWidth="2" android:strokeLineCap="round"
+        android:pathData="M54,66 Q51,70 48,68 M54,66 Q57,70 60,68" />
+    <!-- mejillas -->
+    <path android:fillColor="#F2C9BA" android:pathData="M38,64 a3.5,2.4 0 1,0 7,0 a3.5,2.4 0 1,0 -7,0 Z" />
+    <path android:fillColor="#F2C9BA" android:pathData="M63,64 a3.5,2.4 0 1,0 7,0 a3.5,2.4 0 1,0 -7,0 Z" />
+</vector>

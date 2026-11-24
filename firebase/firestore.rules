@@ -1,0 +1,26 @@
+rules_version = '2';
+// Cada estudiante solo puede leer y escribir sus propios registros de ánimo.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid}/moods/{moodId} {
+      allow read, delete: if request.auth != null && request.auth.uid == uid;
+      allow create, update: if request.auth != null
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(
+             ['emotion', 'intensity', 'note', 'tags', 'createdAt', 'updatedAt', 'photoPath'])
+        && request.resource.data.emotion is string
+        && request.resource.data.intensity is int
+        && request.resource.data.intensity >= 1 && request.resource.data.intensity <= 5
+        && request.resource.data.note is string
+        && request.resource.data.note.size() <= 500
+        && request.resource.data.tags is string
+        && request.resource.data.tags.size() <= 400
+        && request.resource.data.createdAt is int
+        && request.resource.data.updatedAt is int;
+    }
+    // Todo lo demás está denegado por defecto.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

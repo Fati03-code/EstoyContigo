@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>es-MX</string>
+	<key>CFBundleDisplayName</key>
+	<string>EstoyContigo</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Para tomar una foto opcional para tu diario. La foto se guarda de forma privada en tu teléfono.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Para elegir una foto opcional para tu diario cuando la cámara no está disponible.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Para ordenar el directorio de apoyo por cercanía. Tu ubicación no se guarda ni se envía.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Para registrar tu ánimo al agitar el teléfono y detectar si vas en movimiento durante una respiración.</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>tel</string>
+		<string>mailto</string>
+		<string>whatsapp</string>
+	</array>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>AccentColor</string>
+	</dict>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+	</dict>
+</dict>
+</plist>
