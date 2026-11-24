@@ -49,8 +49,15 @@ class SyncManager(
                 } else {
                     val remotePhoto = uploadPhotoIfNeeded(entry, session.uid, session.idToken)
                     firestore.upsertMood(session.uid, session.idToken, entry.toDocument(remotePhoto))
-                    dao.markSynced(entry.id, remotePhoto, entry.updatedAt)
-                    uploaded++
+                    val marked = dao.markSynced(entry.id, remotePhoto, entry.updatedAt)
+                    if (marked == 0 && dao.getById(entry.id) == null) {
+                        // Se borró localmente mientras se subía: revertir la copia en la nube.
+                        firestore.deleteMood(session.uid, session.idToken, entry.id)
+                        remotePhoto?.let { storage.deletePhoto(session.idToken, it) }
+                        deleted++
+                    } else {
+                        uploaded++
+                    }
                 }
             } catch (e: Exception) {
                 failed++
