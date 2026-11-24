@@ -1,0 +1,19 @@
+rules_version = '2';
+// Fotos del diario: privadas por usuario, solo JPEG y máximo 2 MB.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /users/{uid}/photos/{fileName} {
+      allow read, delete: if request.auth != null && request.auth.uid == uid;
+      allow create, update: if request.auth != null
+        && request.auth.uid == uid
+        && request.resource.size < 2 * 1024 * 1024
+        && request.resource.contentType.matches('image/jpeg');
+    }
+    match /users/{uid}/photos/{path=**} {
+      allow list: if request.auth != null && request.auth.uid == uid;
+    }
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
