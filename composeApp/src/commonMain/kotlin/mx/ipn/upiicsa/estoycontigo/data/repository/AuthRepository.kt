@@ -52,7 +52,7 @@ class AuthRepository(
 
     suspend fun deleteRemoteAccount(idToken: String) = api.deleteAccount(idToken)
 
-    suspend fun signOut() = prefs.clearSession()
+    suspend fun signOut() = refreshMutex.withLock { prefs.clearSession() }
 
     private suspend fun runAuth(block: suspend () -> AuthSession): Result<AuthSession> =
         try {
