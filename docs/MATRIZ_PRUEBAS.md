@@ -26,7 +26,7 @@ Total: 26 pruebas, 0 fallos.
 | CP-05 | SOS sin internet | Modo avión → botón SOS → Línea de la Vida | Abre el marcador con 8009112000 | ✅ |
 | CP-06 | Permiso de cámara denegado | Foto del día → Denegar dos veces | Explicación + botón "Abrir Ajustes"; el registro se guarda sin foto | ✅ |
 | CP-07 | Directorio sin GPS | Denegar ubicación | Lista completa por categoría, sin distancias | ✅ |
-| CP-08 | Rotación / proceso | Escribir nota, rotar y "No conservar actividades" | La nota y la emoción se conservan (SavedStateHandle) | ✅ |
+| CP-08 | Rotación / proceso | Escribir nota, rotar; luego enviar la app a segundo plano y matar el proceso (`adb shell am kill`) | La nota y la emoción se conservan (SavedStateHandle) | ✅ |
 | CP-09 | Crisis en nota | Escribir "ya no quiero vivir" y guardar | Pantalla de apoyo con 911 y líneas de crisis | ✅ |
 | CP-10 | Release R8 | Instalar APK release firmado y repetir CP-01..CP-03 | Sin cierres; Room y serialización funcionan | ✅ |
 
