@@ -36,7 +36,9 @@ import platform.Foundation.NSOperationQueue
 import platform.Foundation.NSSearchPathForDirectoriesInDomains
 import platform.Foundation.NSApplicationSupportDirectory
 import platform.Foundation.NSUserDomainMask
+import platform.Foundation.NSNumber
 import platform.Foundation.NSURL
+import platform.Foundation.NSURLIsExcludedFromBackupKey
 import platform.Foundation.NSString
 import platform.Foundation.create
 import platform.Foundation.dataWithContentsOfFile
@@ -84,6 +86,8 @@ internal fun ByteArray.toNSData(): NSData = usePinned {
 internal fun appSupportDir(): String {
     val dir = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, true).first() as String
     NSFileManager.defaultManager.createDirectoryAtPath(dir, true, null, null)
+    // Diario, sesión y fotos fuera de los respaldos de iCloud/Finder (equivale a allowBackup=false).
+    NSURL.fileURLWithPath(dir).setResourceValue(NSNumber(bool = true), NSURLIsExcludedFromBackupKey, null)
     return dir
 }
 
