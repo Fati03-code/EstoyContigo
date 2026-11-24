@@ -45,6 +45,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -125,11 +126,12 @@ fun App(deepLink: StateFlow<String?>, onDeepLinkHandled: () -> Unit) {
                     onDeepLinkHandled()
                 }
             }
+            val consentGiven = rememberUpdatedState(settings.onboardingDone && settings.accountStepDone)
             LaunchedEffect(Unit) {
                 appVm.shakes.collect {
                     val current = nav.currentBackStackEntry?.destination
                     val inMainFlow = topLevel.any { t -> current?.hasRoute(t.route::class) == true }
-                    if (inMainFlow) nav.navigate(Route.Mood) { launchSingleTop = true }
+                    if (inMainFlow && consentGiven.value) nav.navigate(Route.Mood) { launchSingleTop = true }
                 }
             }
             MainShell(nav, start, state.isOnline)
@@ -144,7 +146,8 @@ private fun MainShell(nav: NavHostController, start: Route, isOnline: Boolean) {
     val scope = rememberCoroutineScope()
     val backStack by nav.currentBackStackEntryAsState()
     val destination = backStack?.destination
-    val isTopLevel = topLevel.any { destination?.hasRoute(it.route::class) == true }
+    val mainUnlocked = start == Route.Home
+    val isTopLevel = mainUnlocked && topLevel.any { destination?.hasRoute(it.route::class) == true }
 
     fun go(route: Route) {
         scope.launch { drawerState.close() }
@@ -206,7 +209,9 @@ private fun MainShell(nav: NavHostController, start: Route, isOnline: Boolean) {
                 }
             },
         ) { padding ->
-            val openDrawer: () -> Unit = { scope.launch { drawerState.open() } }
+            val openDrawer: () -> Unit = {
+                if (mainUnlocked) scope.launch { drawerState.open() } else nav.popBackStack()
+            }
             NavHost(
                 navController = nav,
                 startDestination = start,
@@ -266,7 +271,9 @@ private fun MainShell(nav: NavHostController, start: Route, isOnline: Boolean) {
                     DirectoryScreen(onMenu = openDrawer, onSos = { nav.navigate(Route.Crisis) })
                 }
                 composable<Route.Crisis> {
-                    CrisisScreen(onBack = { nav.popBackStack() }, onDirectory = { goTop(Route.Directory) },
+                    CrisisScreen(onBack = { nav.popBackStack() }, onDirectory = {
+                            if (mainUnlocked) goTop(Route.Directory) else nav.navigate(Route.Directory)
+                        },
                         onBreathing = { nav.navigate(Route.Breathing("suspiro")) })
                 }
                 composable<Route.Settings> {
